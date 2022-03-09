@@ -51,10 +51,12 @@ const postsSchema = new Schema({
 			ref: 'colleges',
 		},
 	],
-	registeredStudents: {
-		type: Schema.Types.ObjectId,
-		ref: 'students',
-	},
+	registeredStudents: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'students',
+		},
+	],
 });
 
 const posts = model('posts', postsSchema);
