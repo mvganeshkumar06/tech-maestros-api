@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
 	try {
-		const { userType, email, password } = req.body;
+		const { userType, name, email, password } = req.body;
 		let existingUser;
 		if (userType === 'student') {
 			existingUser = await Students.findOne({ collegeEmail: email });
@@ -25,11 +25,11 @@ const registerUser = async (req, res) => {
 		req.body.password = await bcrypt.hash(password, 10);
 		let user;
 		if (userType === 'student') {
-			user = await new Students(req.body);
+			user = await new Students({ name: name, collegeEmail: email, password: password });
 		} else if (userType === 'college') {
-			user = await new Colleges(req.body);
+			user = await new Colleges({ name: name, email: email, password: password });
 		} else if (userType === 'company') {
-			user = await new Companies(req.body);
+			user = await new Companies({ name: name, email: email, password: password });
 		}
 		await user.save();
 		res.status(201).json(user.id);
