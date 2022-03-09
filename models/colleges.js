@@ -7,8 +7,12 @@ const collegeSchema = new Schema({
 		required: [true, 'Name is required'],
 	},
 	code: {
-		type: Number,
+		type: String,
 		required: [true, 'Code is required'],
+	},
+	password: {
+		type: String,
+		required: [true, 'Password is required'],
 	},
 	description: {
 		type: String,
