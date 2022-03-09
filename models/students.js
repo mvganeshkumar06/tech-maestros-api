@@ -14,25 +14,18 @@ const studentSchema = new Schema({
 		type: String,
 		required: [true, 'Password is required'],
 	},
-	isVerified: {
-		type: Boolean,
-	},
 	college: {
 		type: Schema.Types.ObjectId,
 		ref: 'colleges',
+	},
+	branch: {
+		type: String,
 	},
 	dob: {
 		type: Date,
 	},
 	phone: {
 		type: String,
-	},
-	personalEmail: {
-		type: String,
-		validate: {
-			validator: (email) => isEmail(email),
-			message: 'Please enter a correct email',
-		},
 	},
 	collegeEmail: {
 		type: String,
@@ -41,6 +34,13 @@ const studentSchema = new Schema({
 			message: 'Please enter a correct email',
 		},
 		required: [true, 'Email is required'],
+	},
+	personalEmail: {
+		type: String,
+		validate: {
+			validator: (email) => isEmail(email),
+			message: 'Please enter a correct email',
+		},
 	},
 	socials: [
 		{
@@ -53,15 +53,7 @@ const studentSchema = new Schema({
 		},
 	],
 	address: {
-		street: {
-			type: String,
-		},
-		city: {
-			type: String,
-		},
-		state: {
-			type: String,
-		},
+		type: String,
 	},
 	education: {
 		secondary: {
@@ -184,6 +176,9 @@ const studentSchema = new Schema({
 			type: String,
 		},
 	],
+	isVerified: {
+		type: Boolean,
+	},
 });
 
 const students = model('students', studentSchema);

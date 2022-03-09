@@ -21,12 +21,6 @@ const postsSchema = new Schema({
 				required: [true, 'post locations is required'],
 			},
 		],
-		skills: [
-			{
-				type: String,
-				required: [true, 'post skills is required'],
-			},
-		],
 		deadline: {
 			type: Date,
 		},
@@ -37,8 +31,19 @@ const postsSchema = new Schema({
 	},
 	requirements: [
 		{
-			type: String,
-			required: [true, 'post requirements is required'],
+			branches: [
+				{
+					type: String,
+				},
+			],
+			grade: {
+				type: Number,
+			},
+			skills: [
+				{
+					type: String,
+				},
+			],
 		},
 	],
 	pay: {
