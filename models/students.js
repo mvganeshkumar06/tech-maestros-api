@@ -25,47 +25,43 @@ const studentSchema = new Schema({
 	dob: {
 		type: Date,
 	},
-	contact: {
-		phone: {
+	phone: {
+		type: String,
+	},
+	personalEmail: {
+		type: String,
+		validate: {
+			validator: (email) => isEmail(email),
+			message: 'Please enter a correct email',
+		},
+	},
+	collegeEmail: {
+		type: String,
+		validate: {
+			validator: (email) => isEmail(email),
+			message: 'Please enter a correct email',
+		},
+		required: [true, 'Email is required'],
+	},
+	socials: [
+		{
+			name: {
+				type: String,
+			},
+			url: {
+				type: String,
+			},
+		},
+	],
+	address: {
+		street: {
 			type: String,
 		},
-		email: {
-			personal: {
-				type: String,
-				validate: {
-					validator: (email) => isEmail(email),
-					message: 'Please enter a correct email',
-				},
-			},
-			college: {
-				type: String,
-				validate: {
-					validator: (email) => isEmail(email),
-					message: 'Please enter a correct email',
-				},
-				required: [true, 'Email is required'],
-			},
+		city: {
+			type: String,
 		},
-		socials: [
-			{
-				name: {
-					type: String,
-				},
-				url: {
-					type: String,
-				},
-			},
-		],
-		address: {
-			street: {
-				type: String,
-			},
-			city: {
-				type: String,
-			},
-			state: {
-				type: String,
-			},
+		state: {
+			type: String,
 		},
 	},
 	education: {

@@ -20,27 +20,25 @@ const collegeSchema = new Schema({
 	isVerified: {
 		type: Boolean,
 	},
-	contact: {
-		email: {
+	email: {
+		type: String,
+		required: [true, 'Email is required'],
+	},
+	website: {
+		type: String,
+	},
+	logo: {
+		type: String,
+	},
+	address: {
+		street: {
 			type: String,
-			required: [true, 'Email is required'],
 		},
-		website: {
+		city: {
 			type: String,
 		},
-		logo: {
+		state: {
 			type: String,
-		},
-		address: {
-			street: {
-				type: String,
-			},
-			city: {
-				type: String,
-			},
-			state: {
-				type: String,
-			},
 		},
 	},
 	stats: {
