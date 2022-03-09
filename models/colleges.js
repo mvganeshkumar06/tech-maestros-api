@@ -35,15 +35,7 @@ const collegeSchema = new Schema({
 		type: String,
 	},
 	address: {
-		street: {
-			type: String,
-		},
-		city: {
-			type: String,
-		},
-		state: {
-			type: String,
-		},
+		type: String,
 	},
 	stats: {
 		departments: [

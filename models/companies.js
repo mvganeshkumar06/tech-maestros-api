@@ -47,15 +47,7 @@ const companySchema = new Schema({
 		},
 	],
 	address: {
-		street: {
-			type: String,
-		},
-		city: {
-			type: String,
-		},
-		state: {
-			type: String,
-		},
+		type: String,
 	},
 	preferredColleges: [{ type: Schema.Types.ObjectId, ref: 'colleges' }],
 	posts: [
