@@ -22,14 +22,18 @@ const registerUser = async (req, res) => {
 				errorMessage: 'Email already exists, please try a different email',
 			});
 		}
-		req.body.password = await bcrypt.hash(password, 10);
+		const hashedPassword = await bcrypt.hash(password, 10);
 		let user;
 		if (userType === 'student') {
-			user = await new Students({ name: name, collegeEmail: email, password: password });
+			user = await new Students({
+				name: name,
+				collegeEmail: email,
+				password: hashedPassword,
+			});
 		} else if (userType === 'college') {
-			user = await new Colleges({ name: name, email: email, password: password });
+			user = await new Colleges({ name: name, email: email, password: hashedPassword });
 		} else if (userType === 'company') {
-			user = await new Companies({ name: name, email: email, password: password });
+			user = await new Companies({ name: name, email: email, password: hashedPassword });
 		}
 		await user.save();
 		res.status(201).json(user.id);
