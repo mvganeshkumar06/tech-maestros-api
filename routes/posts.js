@@ -3,6 +3,15 @@ const router = express.Router();
 const Posts = require('../models/posts');
 const Companies = require('../models/companies');
 
+router.get('/', async (req, res) => {
+	try {
+		const allPosts = await Posts.find({});
+		res.json(allPosts);
+	} catch (error) {
+		res.json({ errorMessage: error.message });
+	}
+});
+
 router.post('/', async (req, res) => {
 	try {
 		const { company } = req.body;

@@ -27,6 +27,29 @@ router.get('/students', async (req, res) => {
 	}
 });
 
+router.get('/students/requirements', async (req, res) => {
+	try {
+		const { collegeId } = req.query;
+		const students = await Students.find({
+			college: mongoose.Types.ObjectId(collegeId),
+		});
+		const studentsRequirements = students.map((student) => {
+			return {
+				_id: student._id,
+				name: student.name,
+				branch: student.branch,
+				grade: student.education.college.grade,
+				skills: student.skills,
+			};
+		});
+		return res.json(studentsRequirements);
+	} catch (error) {
+		res.status(400).json({
+			errorMessage: "Can't find students with the given college id",
+		});
+	}
+});
+
 router.get('/:collegeId', async (req, res) => {
 	try {
 		const { collegeId } = req.params;
