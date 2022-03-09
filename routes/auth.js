@@ -6,8 +6,10 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res, Model) => {
 	try {
-		const { registerationNumber } = req.body;
-		const isUserExisting = await Model.findOne({ registerationNumber: registerationNumber });
+		const { registrationNumber } = req.body;
+		const isUserExisting = await Model.findOne({
+			registrationNumber: registrationNumber,
+		});
 		if (isUserExisting) {
 			return res.status(409).json({
 				errorMessage:
@@ -35,8 +37,8 @@ router.post('/register', async (req, res) => {
 });
 
 const loginUser = async (req, res, Model) => {
-	const { registerationNumber, password } = req.body;
-	const user = await Model.findOne({ registerationNumber: registerationNumber });
+	const { registrationNumber, password } = req.body;
+	const user = await Model.findOne({ registrationNumber: registrationNumber });
 	if (!user) {
 		return res
 			.status(401)
