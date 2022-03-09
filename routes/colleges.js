@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Colleges = require('../models/colleges');
+const Students = require('../models/students');
+const mongoose = require('mongoose');
 
 router.get('/', async (req, res) => {
 	try {
@@ -8,6 +10,20 @@ router.get('/', async (req, res) => {
 		res.json(allColleges);
 	} catch (error) {
 		res.json({ errorMessage: error.message });
+	}
+});
+
+router.get('/students', async (req, res) => {
+	try {
+		const { collegeId } = req.query;
+		const students = await Students.find({
+			college: mongoose.Types.ObjectId(collegeId),
+		});
+		return res.json(students);
+	} catch (error) {
+		res.status(400).json({
+			errorMessage: "Can't find students with the given college id",
+		});
 	}
 });
 

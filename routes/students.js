@@ -1,4 +1,5 @@
 const express = require('express');
+const { default: mongoose } = require('mongoose');
 const router = express.Router();
 const Students = require('../models/students');
 
@@ -28,7 +29,14 @@ router.get('/:studentId', async (req, res) => {
 router.post('/:studentId', async (req, res) => {
 	const { studentId } = req.params;
 	try {
-		const student = await Students.findByIdAndUpdate(studentId, req.body, { new: true });
+		const student = await Students.findByIdAndUpdate(
+			studentId,
+			{
+				...req.body,
+				college: new mongoose.Types.ObjectId(req.body.collegeId),
+			},
+			{ new: true },
+		);
 		res.status(200).json(student);
 	} catch (err) {
 		console.log('Error while updating student profile', err);
