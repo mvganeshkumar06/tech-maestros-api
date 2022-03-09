@@ -34,13 +34,13 @@ router.post('/register', async (req, res) => {
 
 const loginUser = async (req, res, Model) => {
 	const { userName, password } = req.body;
-	const user = await Model.findOne({ userName: userName });
+	const user = await Model.findOne({ registerationNumber: userName });
 	if (!user) {
 		return res.status(401).json({ errorMessage: 'Wrong username, please try again' });
 	}
 	const isAuthenticated = await bcrypt.compare(password, user.password);
 	if (isAuthenticated) {
-		const accessToken = jwt.sign({ id: user._id, name: userName }, process.env.SERVER_SECRET);
+		const accessToken = jwt.sign({ id: user._id, name: user.name }, process.env.SERVER_SECRET);
 		return res.json({ accessToken });
 	}
 	res.status(401).json({ errorMessage: 'Wrong password, please try again' });
