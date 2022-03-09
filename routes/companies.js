@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Companies = require('../models/companies');
+const sendMails = require('../utilities/mailsender');
 
 router.get('/', async (req, res) => {
 	try {
@@ -9,6 +10,17 @@ router.get('/', async (req, res) => {
 	} catch (error) {
 		res.json({ errorMessage: error.message });
 	}
+});
+
+router.post('/sendmails', (req, res) => {
+	const { emails } = req.body;
+	emails.forEach((email) => {
+		sendMails(email);
+	});
+	res.json({
+		status: 'success',
+		data: emails,
+	});
 });
 
 router.get('/:companyId', async (req, res) => {
