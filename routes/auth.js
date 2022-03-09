@@ -8,9 +8,9 @@ const registerUser = async (req, res, Model) => {
 	try {
 		const isUserExisting = await Model.findOne({ userName: req.body.userName });
 		if (isUserExisting) {
-			return res
-				.status(409)
-				.json({ errorMessage: 'Username already exists, please try a different username' });
+			return res.status(409).json({
+				errorMessage: 'Username already exists, please try a different username',
+			});
 		}
 		req.body.password = await bcrypt.hash(req.body.password, 10);
 		const user = await new Model(req.body);
@@ -23,7 +23,7 @@ const registerUser = async (req, res, Model) => {
 
 router.post('/register', async (req, res) => {
 	try {
-		const { user } = req.query;
+		const { user } = req.body;
 		if (user === 'student') {
 			registerUser(req, res, Students);
 		}
@@ -48,7 +48,7 @@ const loginUser = async (req, res, Model) => {
 
 router.post('/login', async (req, res) => {
 	try {
-		const { user } = req.query;
+		const { user } = req.body;
 		if (user === 'student') {
 			loginUser(req, res, Students);
 		}
