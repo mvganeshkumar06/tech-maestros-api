@@ -6,10 +6,12 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res, Model) => {
 	try {
-		const isUserExisting = await Model.findOne({ userName: req.body.userName });
+		const { registerationNumber } = req.body;
+		const isUserExisting = await Model.findOne({ registerationNumber: registerationNumber });
 		if (isUserExisting) {
 			return res.status(409).json({
-				errorMessage: 'Username already exists, please try a different username',
+				errorMessage:
+					'Registeration number already exists, please try a different registeration number',
 			});
 		}
 		req.body.password = await bcrypt.hash(req.body.password, 10);
@@ -33,10 +35,12 @@ router.post('/register', async (req, res) => {
 });
 
 const loginUser = async (req, res, Model) => {
-	const { userName, password } = req.body;
-	const user = await Model.findOne({ registerationNumber: userName });
+	const { registerationNumber, password } = req.body;
+	const user = await Model.findOne({ registerationNumber: registerationNumber });
 	if (!user) {
-		return res.status(401).json({ errorMessage: 'Wrong username, please try again' });
+		return res
+			.status(401)
+			.json({ errorMessage: 'Wrong registeration number, please try again' });
 	}
 	const isAuthenticated = await bcrypt.compare(password, user.password);
 	if (isAuthenticated) {
