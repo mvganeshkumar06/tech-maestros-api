@@ -25,4 +25,14 @@ router.get('/:studentId', async (req, res) => {
 	}
 });
 
+router.post('/:studentId', async (req, res) => {
+	const { studentId } = req.params;
+	try {
+		const student = await Students.findByIdAndUpdate(studentId, req.body);
+		res.status(200).json(student);
+	} catch (err) {
+		console.log('Error while updating student profile', err);
+	}
+});
+
 module.exports = router;
