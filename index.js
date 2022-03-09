@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const studentsRoutes = require('./routes/students');
 const collegeRoutes = require('./routes/colleges');
 const companiesRoute = require('./routes/companies');
+const postsRoute = require('./routes/posts');
 const app = express();
 const port = process.env.PORT;
 
@@ -25,6 +26,8 @@ app.use('/auth', authRoutes);
 app.use('/students', studentsRoutes);
 app.use('/colleges', collegeRoutes);
 app.use('/companies', companiesRoute);
+app.use('/posts', postsRoute);
+
 app.get('/', (req, res) => {
 	res.send('Tech Maestros API is running...');
 });
