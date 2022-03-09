@@ -18,6 +18,9 @@ const studentSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'colleges',
 	},
+	branch: {
+		type: String,
+	},
 	dob: {
 		type: Date,
 	},
