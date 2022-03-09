@@ -2,29 +2,35 @@ const express = require('express');
 const router = express.Router();
 const Students = require('../models/students');
 const Colleges = require('../models/colleges');
+const Companies = require('../models/companies');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
 	try {
-		const userType = req.body.userType;
-		let Model, email, existingUser;
+		const { userType, email, password } = req.body;
+		let existingUser;
 		if (userType === 'student') {
-			Model = Students;
-			email = req.body.collegeEmail;
-			existingUser = await Model.findOne({ collegeEmail: email });
+			existingUser = await Students.findOne({ collegeEmail: email });
 		} else if (userType === 'college') {
-			Model = Colleges;
-			email = req.body.email;
-			existingUser = await Model.findOne({ email: email });
+			existingUser = await Colleges.findOne({ email: email });
+		} else if (userType === 'company') {
+			existingUser = await Companies.findOne({ email: email });
 		}
 		if (existingUser) {
 			return res.status(409).json({
 				errorMessage: 'Email already exists, please try a different email',
 			});
 		}
-		req.body.password = await bcrypt.hash(req.body.password, 10);
-		const user = await new Model(req.body);
+		req.body.password = await bcrypt.hash(password, 10);
+		let user;
+		if (userType === 'student') {
+			user = await new Students(req.body);
+		} else if (userType === 'college') {
+			user = await new Colleges(req.body);
+		} else if (userType === 'company') {
+			user = await new Companies(req.body);
+		}
 		await user.save();
 		res.status(201).json(user.id);
 	} catch (error) {
@@ -41,17 +47,14 @@ router.post('/register', async (req, res) => {
 });
 
 const loginUser = async (req, res) => {
-	const userType = req.body.userType,
-		password = req.body.password;
-	let Model, email, existingUser;
+	const { userType, email, password } = req.body;
+	let existingUser;
 	if (userType === 'student') {
-		Model = Students;
-		email = req.body.collegeEmail;
-		existingUser = await Model.findOne({ collegeEmail: email });
+		existingUser = await Students.findOne({ collegeEmail: email });
 	} else if (userType === 'college') {
-		Model = Colleges;
-		email = req.body.email;
-		existingUser = await Model.findOne({ email: email });
+		existingUser = await Colleges.findOne({ email: email });
+	} else if (userType === 'company') {
+		existingUser = await Companies.findOne({ email: email });
 	}
 	if (!existingUser) {
 		return res.status(401).json({ errorMessage: 'Wrong email, please try again' });
