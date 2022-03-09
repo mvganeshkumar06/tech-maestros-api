@@ -5,6 +5,7 @@ const connectToDatabase = require('./database/connection');
 const authRoutes = require('./routes/auth');
 const studentsRoutes = require('./routes/students');
 const collegeRoutes = require('./routes/colleges');
+const companiesRoute = require('./routes/companies');
 const app = express();
 const port = process.env.PORT;
 
@@ -23,7 +24,7 @@ connectToDatabase();
 app.use('/auth', authRoutes);
 app.use('/students', studentsRoutes);
 app.use('/colleges', collegeRoutes);
-
+app.use('/companies', companiesRoute);
 app.get('/', (req, res) => {
 	res.send('Tech Maestros API is running...');
 });
