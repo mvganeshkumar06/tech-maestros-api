@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
+const { isEmail } = require('validator');
 
 const collegeSchema = new Schema({
 	name: {
 		type: String,
 		required: [true, 'Name is required'],
 	},
-	code: {
-		type: String,
-		required: [true, 'Code is required'],
-	},
 	password: {
 		type: String,
 		required: [true, 'Password is required'],
+	},
+	code: {
+		type: String,
 	},
 	description: {
 		type: String,
@@ -22,6 +22,10 @@ const collegeSchema = new Schema({
 	},
 	email: {
 		type: String,
+		validate: {
+			validator: (email) => isEmail(email),
+			message: 'Please enter a correct email',
+		},
 		required: [true, 'Email is required'],
 	},
 	website: {

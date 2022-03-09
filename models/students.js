@@ -9,7 +9,6 @@ const studentSchema = new Schema({
 	},
 	registrationNumber: {
 		type: String,
-		required: [true, 'Registeration Number is required'],
 	},
 	password: {
 		type: String,

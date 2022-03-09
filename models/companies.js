@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
+const { isEmail } = require('validator');
+
 const companySchema = new Schema({
 	name: {
 		type: String,
 		required: [true, 'Name is required'],
+	},
+	password: {
+		type: String,
+		required: [true, 'Password is required'],
 	},
 	logo: {
 		type: String,
@@ -17,40 +23,38 @@ const companySchema = new Schema({
 	isVerified: {
 		type: Boolean,
 	},
-	contact: {
-		website: {
-			type: String,
+	website: {
+		type: String,
+	},
+	phone: {
+		type: String,
+	},
+	email: {
+		type: String,
+		validate: {
+			validator: (email) => isEmail(email),
+			message: 'Please enter a correct email',
 		},
-		phone: {
-			type: String,
-		},
-		email: {
-			type: String,
-			validate: {
-				validator: (email) => isEmail(email),
-				message: 'Please enter a correct email',
-			},
-		},
-		socials: [
-			{
-				name: {
-					type: String,
-				},
-				url: {
-					type: String,
-				},
-			},
-		],
-		address: {
-			street: {
+	},
+	socials: [
+		{
+			name: {
 				type: String,
 			},
-			city: {
+			url: {
 				type: String,
 			},
-			state: {
-				type: String,
-			},
+		},
+	],
+	address: {
+		street: {
+			type: String,
+		},
+		city: {
+			type: String,
+		},
+		state: {
+			type: String,
 		},
 	},
 	preferredColleges: [{ type: Schema.Types.ObjectId, ref: 'colleges' }],
