@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const htmltemplate = require('./htmltemplate');
 
 const sendMails = (email) => {
 	const transporter = nodemailer.createTransport({
@@ -16,7 +17,7 @@ const sendMails = (email) => {
 		from: 'erenyaegar158@gmail.com',
 		to: email,
 		subject: 'Applied for the Job',
-		text: 'Fist mail form node js',
+		html: htmltemplate,
 	};
 
 	transporter.sendMail(mailOptions, function (err, success) {
