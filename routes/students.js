@@ -14,6 +14,26 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/requirements', async (req, res) => {
+	try {
+		const students = await Students.find({});
+		const studentsRequirements = students.map((student) => {
+			return {
+				_id: student._id,
+				name: student.name,
+				branch: student.branch,
+				grade: student.education.college.grade,
+				skills: student.skills,
+			};
+		});
+		return res.json(studentsRequirements);
+	} catch (error) {
+		res.status(400).json({
+			errorMessage: 'Error while getting student requirements',
+		});
+	}
+});
+
 router.get('/:studentId', async (req, res) => {
 	try {
 		const { studentId } = req.params;
