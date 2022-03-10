@@ -6,7 +6,7 @@ const Students = require('../models/students');
 router.get('/', async (req, res) => {
 	try {
 		const allStudents = await Students.find({})
-			.select('_id name registrationNumber college')
+			.select('_id name registrationNumber college collegeEmail')
 			.populate('college', '_id name');
 		res.json(allStudents);
 	} catch (error) {
